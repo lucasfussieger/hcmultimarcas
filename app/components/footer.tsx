@@ -3,8 +3,8 @@ import { buscarloja }  from '../actions/loja';
 
 export default async function Footer() {
   const loja = await buscarloja();
-  const telefone = loja?.telefone || '5547997693102';
-  const instagram = loja?.instagram || 'https://instagram.com';
+  const telefone = loja?.numero
+  const instagram = loja?.instagram
   const whatsappUrl = `https://wa.me/${telefone}?text=Olá! Tudo Bem? Gostaria de saber mais sobre seus produtos!`;
 
   return (
