@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #ffffff;
@@ -23,4 +26,48 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+.wb {
+  width: 300;
+  height: auto;
+  padding: 10px 20px;
+  background-color: #25D366;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
+}
+
+.hcm {
+  background: #ffae00;
+}
+
+.hc {
+  background-image: linear-gradient(
+    270deg,
+    #ffffff,
+    #ffae00,
+    #ff6a00
+  );
+  background-size: 600% 600%;
+  animation: colormove 5s ease infinite;
+  color: white;
+  -webkit-background-clip: text;
+  background-clip: text;
+  
+  /* 3. Torna a cor original da fonte transparente */
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes colormove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

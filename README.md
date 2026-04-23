@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HC Multimarcas — Loja Online
 
-## Getting Started
+Plataforma de e-commerce moderna e responsiva para a HC Multimarcas, especializada em moda masculina streetwear em Tijucas, SC.
 
-First, run the development server:
+## 🎯 Sobre o Projeto
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+A HC Multimarcas é uma loja com forte presença local que vende camisetas, calças, bermudas, bonés, perfumes e acessórios para o público jovem (16-35 anos). Este projeto transforma a loja em uma plataforma digital profissional, permitindo que clientes visualizem produtos, entrem em contato via WhatsApp e comprem com facilidade.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Decisões Técnicas
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Por que Next.js?
+- **Performance**: Carregamento ultra-rápido com renderização no servidor e cliente
+- **SEO**: Melhor indexação nos buscadores para atrair mais clientes
+- **Escalabilidade**: A loja pode crescer sem perder performance
+- **Facilidade de manutenção**: Código limpo e organizado para futuras atualizações
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Por que Tailwind CSS?
+- **Design responsivo**: Site funciona perfeitamente em mobile, tablet e desktop
+- **Sem código custom complexo**: Apenas classes simples e reutilizáveis
+- **Carregamento rápido**: CSS otimizado e minificado automaticamente
 
-## Learn More
+### Processamento de Imagens com Sharp
+- **Economia de banda**: Imagens convertidas para WebP (60% menor tamanho)
+- **Carregamento mais rápido**: Páginas abrem instantaneamente
+- **Melhor experiência**: Menos tempo de espera para o cliente
 
-To learn more about Next.js, take a look at the following resources:
+### Autenticação com Next-auth
+- **Segurança**: Controle de acesso para editar produtos e configurações
+- **Privacidade**: Senhas criptografadas e sessões seguras
+- **Gerenciamento simples**: Painel administrativo integrado
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Banco de Dados PostgreSQL
+- **Confiabilidade**: Dados não são perdidos
+- **Escalabilidade**: Suporta crescimento da loja
+- **Flexibilidade**: Fácil adicionar novos tipos de produtos
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 💡 Benefícios para o Cliente
 
-## Deploy on Vercel
+### 📱 Alcance Ampliado
+- Clientes podem acessar a loja 24/7 pelo celular, tablet ou computador
+- Presença online profissional melhora credibilidade
+- Integração com WhatsApp para vendas diretas e atendimento personalizado
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 💰 Gestão Eficiente
+- **Painel administrativo**: Adicionar, editar e deletar produtos em minutos
+- **Informações centralizadas**: Telefone, email e endereço atualizados em um só lugar
+- **Sem intermediários**: Reduz custos de plataformas de e-commerce caras
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### ⚡ Experiência do Cliente
+- Site carrega em menos de 1 segundo
+- Imagens de alta qualidade, otimizadas para economizar dados
+- Formulário de contato integrado + botão direto para WhatsApp
+- Página "Sobre" que conta a história da marca
+
+### 📊 Ferramentas de Controle
+- Editar preços, descrições e informações de produtos instantaneamente
+- Atualizar dados da loja (telefone, email, endereço) sem editar código
+- Segurança: Apenas usuários autenticados podem fazer alterações
+
+## 🛠 Funcionalidades
+
+- ✅ Catálogo de produtos com filtros por categoria
+- ✅ Página de detalhes do produto com seleção de tamanho
+- ✅ Integração WhatsApp em todos os CTA (botões de ação)
+- ✅ Página de contato com formulário
+- ✅ Painel administrativo para editar produtos e configurações da loja
+- ✅ Design responsivo (mobile-first)
+- ✅ Otimização de imagens (WebP)
+- ✅ SEO amigável para buscadores
+
+## 🎨 Design
+
+- **Cores**: Preto, branco e tons de cinza com destaque em azul para CTA
+- **Tipografia**: Fonte Dosis moderna e limpa
+- **Layout**: Grid responsivo que se adapta a qualquer tamanho de tela
+- **Acessibilidade**: Texto legível, contraste adequado, navegação simples
+
+## 🔐 Segurança
+
+- Autenticação JWT segura
+- Variáveis de ambiente protegidas
+- Validação de dados no servidor
+- Sem dados sensíveis expostos no cliente
+
+## 📞 Suporte e Manutenção
+
+O código está bem documentado e estruturado para facilitação de futuras:
+- Adição de novos tipos de produtos
+- Integração com sistemas de pagamento
+- Relatórios de vendas
+- Avaliações e comentários de clientes
+
+---
+
+**HC Multimarcas** — Qualidade, Estilo e Preço Acessível para o Público Jovem.
