@@ -1,11 +1,14 @@
 import '../globals.css';
-import { buscarloja }  from '../actions/loja';
+import { sql } from '../../lib/db';
 
 export default async function Footer() {
-  const loja = await buscarloja();
-  const telefone = loja?.numero
-  const instagram = loja?.instagram
-  const whatsappUrl = `https://wa.me/${telefone}?text=Olá! Tudo Bem? Gostaria de saber mais sobre seus produtos!`;
+  try {
+    const resultado = await sql`SELECT * FROM loja LIMIT 1`;
+    const loja = resultado && resultado.length > 0 ? resultado[0] : null;
+
+    const telefone = loja?.numero || '5548999143649';
+    const instagram = loja?.instagram || 'https://instagram.com/hcmultimarcas';
+    const whatsappUrl = `https://wa.me/${telefone}?text=Olá! Tudo Bem? Gostaria de saber mais sobre seus produtos!`;
 
   return (
     <section className="bg-black text-center text-white py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-12">
@@ -42,5 +45,13 @@ export default async function Footer() {
         </div>
       </div>
     </section>
-  );
+    );
+  } catch (error) {
+    console.error('Erro ao carregar footer:', error);
+    return (
+      <section className="bg-black text-center text-white py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-12">
+        <p className="text-sm text-white/30">Erro ao carregar footer</p>
+      </section>
+    );
+  }
 }

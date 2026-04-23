@@ -1,13 +1,15 @@
-import { buscarloja } from '../actions/loja';
+import { sql } from '../../lib/db';
 import ContatoForm from '../components/ContatoForm';
 import SessionWrapper from 'app/components/sessioncomp';
 import EditarLoja from 'app/components/EditarLoja';
 
 export default async function Contato() {
-  const loja = await buscarloja();
-  const telefone = loja?.telefone 
-  const endereco = loja?.endereco 
-  const email = loja?.email  
+  const resultado = await sql`SELECT * FROM loja LIMIT 1`;
+  const loja = resultado && resultado.length > 0 ? resultado[0] : null;
+
+  const telefone = loja?.telefone || '5548999143649';
+  const endereco = loja?.endereco || 'Tijucas — SC';
+  const email = loja?.email || 'hcmultimarcas22@gmail.com';
 
   const whatsappUrl = `https://wa.me/${telefone}?text=Olá! Tudo Bem? Gostaria de saber mais sobre seus produtos!`;
 
