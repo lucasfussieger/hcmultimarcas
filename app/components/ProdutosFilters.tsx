@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { buscarProdutosPorTipo, buscarProdutos } from '../actions/produtos';
 import '../globals.css';
 
 interface Produto {
@@ -13,44 +12,16 @@ interface Produto {
   imagem?: any;
 }
 
-export default function ProdutosFilters({ produtos: allProdutos }: { produtos: Produto[] }) {
-  const [search, setSearch] = useState('');
-  const [tipo, setTipo] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [produtos, setProdutos] = useState(allProdutos);
+interface Props {
+  produtos: Produto[];
+  tipoAtual?: string;
+}
 
+export default function ProdutosFilters({ produtos: allProdutos, tipoAtual = '' }: Props) {
+  const [search, setSearch] = useState('');
   const tipos = ['Camiseta', 'Calça', 'Boné', 'Perfume', 'Acessório'];
 
-  async function filtrarPorTipo(tipoSelecionado: string) {
-    setLoading(true);
-    setTipo(tipoSelecionado);
-
-    try {
-      const data = await buscarProdutosPorTipo(tipoSelecionado);
-      setProdutos(data as Produto[]);
-    } catch {
-      setProdutos(allProdutos);
-    }
-
-    setLoading(false);
-  }
-
-  async function limparFiltros() {
-    setLoading(true);
-    setSearch('');
-    setTipo('');
-
-    try {
-      const data = await buscarProdutos();
-      setProdutos(data as Produto[]);
-    } catch {
-      setProdutos(allProdutos);
-    }
-
-    setLoading(false);
-  }
-
-  const filtrados = produtos.filter((p) =>
+  const filtrados = allProdutos.filter((p) =>
     p.nome.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -64,31 +35,29 @@ export default function ProdutosFilters({ produtos: allProdutos }: { produtos: P
           <h2 className="text-lg font-bold text-gray-900 mb-4">Filtrar por tipo</h2>
 
           <div className="flex flex-wrap gap-3 mb-6">
-            <button
-              onClick={() => limparFiltros()}
-              className={`px-4 py-2 rounded font-medium transition-colors ${
-                !tipo
+            <a
+              href="/produtos"
+              className={`px-4 py-2 rounded font-medium transition-colors inline-block ${
+                !tipoAtual
                   ? 'hcm text-white'
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
-              disabled={loading}
             >
               Todos
-            </button>
+            </a>
 
             {tipos.map((tipoItem) => (
-              <button
+              <a
                 key={tipoItem}
-                onClick={() => filtrarPorTipo(tipoItem)}
-                className={`px-4 py-2 rounded font-medium transition-colors ${
-                  tipo === tipoItem
+                href={`/produtos/${tipoItem}`}
+                className={`px-4 py-2 rounded font-medium transition-colors inline-block ${
+                  tipoAtual === tipoItem
                     ? 'hcm text-white'
                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                 }`}
-                disabled={loading}
               >
                 {tipoItem}
-              </button>
+              </a>
             ))}
           </div>
         </div>
@@ -96,12 +65,12 @@ export default function ProdutosFilters({ produtos: allProdutos }: { produtos: P
         {/* Resultados */}
         <div className="mb-6">
           <p className="text-gray-600 font-medium">
-            {loading ? 'Carregando...' : `${filtrados.length} produto${filtrados.length !== 1 ? 's' : ''}`}
+            {`${filtrados.length} produto${filtrados.length !== 1 ? 's' : ''}`}
           </p>
         </div>
 
         {/* Grid de Produtos */}
-        {!loading && filtrados.length > 0 ? (
+        {filtrados.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtrados.map((produto) => (
               <a key={produto.id} href={`/produtos/${produto.id}`}>
@@ -126,10 +95,6 @@ export default function ProdutosFilters({ produtos: allProdutos }: { produtos: P
                 </div>
               </a>
             ))}
-          </div>
-        ) : loading ? (
-          <div className="text-center py-12">
-            <p className="text-gray-600">Carregando produtos...</p>
           </div>
         ) : (
           <div className="text-center py-12">
