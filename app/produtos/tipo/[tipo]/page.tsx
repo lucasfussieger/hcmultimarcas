@@ -1,7 +1,7 @@
-import { sql } from '../../../lib/db';
-import CriarProduto from '../../components/CriarProduto';
+import { sql } from '../../../../lib/db';
+import CriarProduto from '../../../components/CriarProduto';
 import SessionWrapper from 'app/components/sessioncomp';
-import ProdutosFilters from '../../components/ProdutosFilters';
+import ProdutosFilters from '../../../components/ProdutosFilters';
 
 interface Props {
   params: Promise<{ tipo: string }>;
