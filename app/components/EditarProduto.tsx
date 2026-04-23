@@ -41,6 +41,7 @@ export default function EditarProduto({ id }: { id: number }) {
         {
           nome: formData.get('nome') as string,
           descricao: formData.get('descricao') as string,
+          status: formData.get('status') === 'true' ? 'true' : 'false',
           valor: parseFloat(formData.get('valor') as string),
           tipo: formData.get('tipo') as string,
         }
@@ -117,6 +118,19 @@ export default function EditarProduto({ id }: { id: number }) {
                   <option>Boné</option>
                   <option>Perfume</option>
                   <option>Acessório</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                <select
+                  name="status"
+                  required
+                  defaultValue={produto.status}
+                  className="w-full px-3 py-2 border rounded"
+                >
+                  <option value="true">Ativo</option>
+                  <option value="false">Inativo</option>
                 </select>
               </div>
 

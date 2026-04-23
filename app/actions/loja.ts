@@ -1,9 +1,12 @@
 'use server'
 import { sql } from '../../lib/db'
+import { revalidatePath } from 'next/cache'
+
 
 export async function buscarloja() {
   try {
     const resultado = await sql`SELECT * FROM loja LIMIT 1`
+    revalidatePath('/')
     return resultado && resultado.length > 0 ? resultado[0] : null
   } catch (error) {
     console.error('Erro ao buscar loja:', error)
@@ -23,6 +26,7 @@ export async function editarloja(dados: { telefone: string; email: string; ender
   const atual = lojaAtual[0]
 
   if (telefone === atual.telefone && email === atual.email && endereco === atual.endereco && instagram === atual.instagram) {
+    
     return atual
   }
 
@@ -36,5 +40,6 @@ export async function editarloja(dados: { telefone: string; email: string; ender
     WHERE id = ${atual.id}
     RETURNING *
   `
+    revalidatePath('/')
   return resultado && resultado.length > 0 ? resultado[0] : atual
 }

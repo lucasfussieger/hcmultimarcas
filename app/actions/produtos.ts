@@ -1,6 +1,7 @@
 'use server'
 import { sql } from '../../lib/db'
 import sharp from 'sharp'
+import { revalidatePath } from 'next/cache'
 
 async function processarImagem(imageBase64: string): Promise<Buffer | null> {
   if (!imageBase64) return null
@@ -8,6 +9,7 @@ async function processarImagem(imageBase64: string): Promise<Buffer | null> {
   try {
     const buffer = Buffer.from(imageBase64, 'base64')
     const webpBuffer = await sharp(buffer).webp({ quality: 80 }).toBuffer()
+    
     return webpBuffer
   } catch (error) {
     console.error('Erro ao processar imagem:', error)
@@ -29,7 +31,10 @@ function converterImagem(imagem: any): string {
 }
 
 export async function buscarProdutos() {
-  const resultado = await sql`SELECT * FROM produtos`
+  const resultado = await sql`SELECT * FROM produtos WHERE status = true`
+
+revalidatePath('/produtos')
+
   return resultado.map((p: any) => ({
     ...p,
     imagem: p.imagem ? converterImagem(p.imagem) : '',
@@ -37,7 +42,10 @@ export async function buscarProdutos() {
 }
 
 export async function buscarProdutosPorTipo(tipo: string) {
-  const resultado = await sql`SELECT * FROM produtos WHERE tipo = ${tipo}`
+  const resultado = await sql`SELECT * FROM produtos WHERE tipo = ${tipo} AND status = true`
+
+  revalidatePath('/produtos')
+
   return resultado.map((p: any) => ({
     ...p,
     imagem: p.imagem ? converterImagem(p.imagem) : '',
@@ -48,7 +56,8 @@ export async function buscarProduto(params: { id: number }) {
   const { id } = params
 
   try {
-    const resultado = await sql`SELECT * FROM produtos WHERE id = ${id}`
+    const resultado = await sql`SELECT * FROM produtos WHERE id = ${id} AND status = true`
+    revalidatePath('/produtos')
     return resultado.map((p: any) => ({
       ...p,
       imagem: p.imagem ? converterImagem(p.imagem) : '',
@@ -72,16 +81,16 @@ export async function criarProduto(params: { tipo: string; nome: string; descric
     VALUES (${tipo}, ${nome}, ${descricao}, ${valor}, ${imagemBuffer}, true)
     RETURNING *
   `
-
+    revalidatePath('/produtos')
   return resultado
 }
 
-export async function editarProduto(params: { id: number }, dados: { tipo: string; nome: string; descricao: string; valor: number }) {
+export async function editarProduto(params: { id: number }, dados: { status: string; tipo: string; nome: string; descricao: string; valor: number }) {
   const { id } = params
-  const { tipo, nome, descricao, valor } = dados
+  const { status, tipo, nome, descricao, valor } = dados
 
   const produtoAtual = await sql`SELECT * FROM produtos WHERE id = ${id}`
-
+    
   if (!produtoAtual || produtoAtual.length === 0) {
     throw new Error('Produto não encontrado')
   }
@@ -97,32 +106,22 @@ export async function editarProduto(params: { id: number }, dados: { tipo: strin
     SET
       nome = ${nome !== atual.nome ? nome : atual.nome},
       tipo = ${tipo !== atual.tipo ? tipo : atual.tipo},
+      status = ${status !== atual.status ? status : atual.status},
       descricao = ${descricao !== atual.descricao ? descricao : atual.descricao},
       valor = ${valor !== atual.valor ? valor : atual.valor}
     WHERE id = ${id}
     RETURNING *
   `
+    revalidatePath('/produtos')
   return resultado
 }
 
-export async function inativarProduto(params: { id: number }) {
-  const { id } = params
-  try {
-  const resultado = await sql`
-    UPDATE produtos SET status=false WHERE id=${id} RETURNING *`
-  
-  return resultado
-}
-catch (error) {
-  console.error('Erro ao inativar produto:', error)
-  throw error
-}
-}
 
 export async function DeleteProduto(params: { id: number }) {
   const { id } = params
   try {
     await sql`DELETE FROM produtos WHERE id=${id}`
+    revalidatePath('/produtos')
     return { mensagem: 'produto excluído' }
   } catch (error) {
     console.error('Erro ao excluir produto:', error)
