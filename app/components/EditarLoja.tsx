@@ -88,9 +88,9 @@ export default function EditarLoja() {
                 <input
                   name="telefone"
                   required
-                  defaultValue={loja.telefone}
+                  defaultValue={loja?.telefone || ''}
                   className="w-full px-3 py-2 border rounded"
-                  placeholder="5548999999999"
+                  placeholder={loja?.telefone || '5548999999999'}
                 />
               </div>
 
@@ -100,9 +100,9 @@ export default function EditarLoja() {
                   name="email"
                   type="email"
                   required
-                  defaultValue={loja.email}
+                  defaultValue={loja?.email || ''}
                   className="w-full px-3 py-2 border rounded"
-                  placeholder="email@example.com"
+                  placeholder={loja?.email || 'email@example.com'}
                 />
               </div>
 
@@ -111,9 +111,9 @@ export default function EditarLoja() {
                 <input
                   name="endereco"
                   required
-                  defaultValue={loja.endereco}
+                  defaultValue={loja?.endereco || ''}
                   className="w-full px-3 py-2 border rounded"
-                  placeholder="Cidade — Estado"
+                  placeholder={loja?.endereco || 'Cidade — Estado'}
                 />
               </div>
 
@@ -122,9 +122,9 @@ export default function EditarLoja() {
                 <input
                   name="instagram"
                   type="url"
-                  defaultValue={loja.instagram}
+                  defaultValue={loja?.instagram || ''}
                   className="w-full px-3 py-2 border rounded"
-                  placeholder="https://instagram.com/seu-perfil"
+                  placeholder={loja?.instagram || 'https://instagram.com/seu-perfil'}
                 />
               </div>
 
