@@ -9,11 +9,13 @@ export default function EditarLoja() {
   const [isOpen, setIsOpen] = useState(false);
   const [loja, setLoja] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [carregando, setCarregando] = useState(false);
 
   useEffect(() => {
     if (!isOpen) return;
 
     async function carregarLoja() {
+      setCarregando(true);
       try {
         const data = await buscarloja();
         if (data) {
@@ -21,6 +23,8 @@ export default function EditarLoja() {
         }
       } catch (err) {
         console.error('Erro ao carregar loja:', err);
+      } finally {
+        setCarregando(false);
       }
     }
 
@@ -62,11 +66,16 @@ export default function EditarLoja() {
         Editar Loja
       </button>
 
-      {isOpen && loja && (
+      {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full max-h-screen overflow-y-auto">
             <h2 className="text-xl font-bold mb-4 text-gray-900">Editar Loja</h2>
 
+            {carregando ? (
+              <div className="text-center py-8">
+                <p className="text-gray-600">Carregando...</p>
+              </div>
+            ) : loja ? (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
@@ -131,6 +140,11 @@ export default function EditarLoja() {
                 </button>
               </div>
             </form>
+            ) : (
+              <div className="text-center py-8">
+                <p className="text-gray-600">Erro ao carregar dados</p>
+              </div>
+            )}
           </div>
         </div>
       )}

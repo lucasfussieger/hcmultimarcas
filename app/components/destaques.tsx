@@ -1,9 +1,13 @@
-import { buscarProdutos } from '../actions/produtos';
+import { sql } from '../../lib/db';
 
 export default async function Destaques() {
   try {
-    const allProducts = await buscarProdutos();
-    const products = allProducts.slice(0, 3);
+    const resultado = await sql`SELECT * FROM produtos LIMIT 3`;
+
+    const products = resultado.map((p: any) => ({
+      ...p,
+      imagem: p.imagem ? `data:image/webp;base64,${Buffer.from(p.imagem).toString('base64')}` : null,
+    }));
 
     return (
       <section className="min-h-screen py-12 bg-gray-100">
