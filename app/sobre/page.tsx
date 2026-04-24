@@ -1,9 +1,15 @@
 import '../globals.css';
-
+import SessionWrapper from 'app/components/sessioncomp';
+import EditarLoja from 'app/components/EditarLoja';
 
 export default function Sobre() {
   return (
     <section className="py-16 bg-white">
+      <SessionWrapper>
+        <div className="flex justify-end max-w-6xl mx-auto px-4 mb-6">
+          <EditarLoja />
+        </div>
+      </SessionWrapper>
       <div className="max-w-6xl mx-auto px-4">
         
         {/* HISTÓRIA + MISSÃO */}
