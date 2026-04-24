@@ -6,7 +6,7 @@ export default async function Destaques() {
 
     const products = resultado.map((p: any) => ({
       ...p,
-      imagem: p.imagem ? Buffer.from(p.imagem).toString('base64') : null,
+      imagem: p.imagem ? `data:image/webp;base64,${Buffer.from(p.imagem).toString('base64')}` : null,
     }));
 
     return (
