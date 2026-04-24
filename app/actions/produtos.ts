@@ -57,7 +57,6 @@ export async function buscarProduto(params: { id: number }) {
 
   try {
     const resultado = await sql`SELECT * FROM produtos WHERE id = ${id}`
-    revalidatePath('/produtos')
     return resultado.map((p: any) => ({
       ...p,
       imagem: p.imagem ? converterImagem(p.imagem) : '',
