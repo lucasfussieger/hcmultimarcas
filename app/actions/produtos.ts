@@ -31,9 +31,9 @@ function converterImagem(imagem: any): string {
 }
 
 export async function buscarProdutos() {
-  const resultado = await sql`SELECT * FROM produtos WHERE status = true`
+  const resultado = await sql`SELECT * FROM produtos`
 
-revalidatePath('/produtos')
+  revalidatePath('/produtos')
 
   return resultado.map((p: any) => ({
     ...p,
@@ -42,7 +42,7 @@ revalidatePath('/produtos')
 }
 
 export async function buscarProdutosPorTipo(tipo: string) {
-  const resultado = await sql`SELECT * FROM produtos WHERE tipo = ${tipo} AND status = true`
+  const resultado = await sql`SELECT * FROM produtos WHERE tipo = ${tipo}`
 
   revalidatePath('/produtos')
 
@@ -56,7 +56,7 @@ export async function buscarProduto(params: { id: number }) {
   const { id } = params
 
   try {
-    const resultado = await sql`SELECT * FROM produtos WHERE id = ${id} AND status = true`
+    const resultado = await sql`SELECT * FROM produtos WHERE id = ${id}`
     revalidatePath('/produtos')
     return resultado.map((p: any) => ({
       ...p,
