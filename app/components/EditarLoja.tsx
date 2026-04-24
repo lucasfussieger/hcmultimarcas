@@ -18,11 +18,16 @@ export default function EditarLoja() {
       setCarregando(true);
       try {
         const data = await buscarloja();
+        console.log('Dados da loja carregados:', data);
         if (data) {
           setLoja(data);
+        } else {
+          console.warn('Nenhum dado retornado de buscarloja');
+          setLoja({ telefone: '', email: '', endereco: '', instagram: '' });
         }
       } catch (err) {
         console.error('Erro ao carregar loja:', err);
+        setLoja({ telefone: '', email: '', endereco: '', instagram: '' });
       } finally {
         setCarregando(false);
       }
@@ -41,6 +46,7 @@ export default function EditarLoja() {
 
     try {
       await editarloja({
+        id: loja?.id || 1,
         telefone: formData.get('telefone') as string,
         email: formData.get('email') as string,
         endereco: formData.get('endereco') as string,
