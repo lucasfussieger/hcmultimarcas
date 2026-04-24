@@ -13,8 +13,8 @@ export async function buscarloja() {
   }
 }
 
-export async function editarloja(dados: { telefone: string; email: string; endereco: string; instagram: string }) {
-  const { telefone, email, endereco, instagram } = dados
+export async function editarloja(dados: {id: number; telefone: string; email: string; endereco: string; instagram: string }) {
+  const { id, telefone, email, endereco, instagram } = dados
 
   try {
     const lojaAtual = await sql`SELECT * FROM loja LIMIT 1`
@@ -40,7 +40,7 @@ export async function editarloja(dados: { telefone: string; email: string; ender
         email = ${email},
         endereco = ${endereco},
         instagram = ${instagram}
-      WHERE id = ${atual.id}
+      WHERE id = ${id}
       RETURNING *
     `
 
