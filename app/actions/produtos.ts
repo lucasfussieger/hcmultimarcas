@@ -111,6 +111,7 @@ export async function editarProduto(params: { id: number }, dados: { status: str
     WHERE id = ${id}
     RETURNING *
   `
+    revalidatePath('/')
     revalidatePath('/produtos')
   return resultado
 }
@@ -120,6 +121,7 @@ export async function DeleteProduto(params: { id: number }) {
   const { id } = params
   try {
     await sql`DELETE FROM produtos WHERE id=${id}`
+    revalidatePath('/')
     revalidatePath('/produtos')
     return { mensagem: 'produto excluído' }
   } catch (error) {
