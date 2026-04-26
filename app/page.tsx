@@ -13,7 +13,7 @@ export default async function Home() {
     }));
 
     return (
-      <section className="min-h-screen py-12 bg-gray-100">
+      <section className="min-h-screen bg-gray-100">
         <Hero />
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between items-end mt-20">
